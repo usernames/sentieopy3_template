@@ -1,0 +1,66 @@
+[tool.poetry]
+name = "{{ cookiecutter.project_slug }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.project_short_description }}"
+authors = [
+    "{{ cookiecutter.full_name}} <{{ cookiecutter.email }}>"
+]
+{% if cookiecutter.open_source_license == "MIT license" %}
+license = "MIT"
+{% elif cookiecutter.open_source_license == "BSD license" %}
+license = "BSD-3-Clause"
+{% elif cookiecutter.open_source_license == "ISC license" %}
+license = "ISC"
+{% elif cookiecutter.open_source_license == "Apache Software License 2.0" %}
+license = "Apache-2.0"
+{% elif cookiecutter.open_source_license == "GNU General Public License v3" %}
+license = "GPL-3.0-only"
+{% endif %}
+
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.6"
+cement = "^3.0.4"
+dynaconf = {version = "^2.2.3", extras = ["vault"]}
+sqlalchemy = "^1.3"
+alembic = "^1.4.1"
+grpcio = "^1.27.2"
+protobuf = "^3.11.3"
+{% if cookiecutter.database == 'PostgreSQL' %}
+# TODO(asandeep): Add DB drivers for other databases as well.
+psycopg2-binary = "^2.8.5"
+{% endif %}
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.3.5"
+pytest-mock = "^2.0.0"
+pytest-cov = "^2.8.1"
+pylint = "^2.4.4"
+isort = "^4.3.21"
+grpcio-testing = "^1.27.2"
+grpcio-tools = "^1.27.2"
+mypy-protobuf = "^1.19"
+{% if cookiecutter.install_precommit_hooks == "y" %}
+pre-commit = "^2.1.1"
+{% endif %}
+
+
+[tool.poetry.scripts]
+{{ cookiecutter.project_slug }} = "{{ cookiecutter.project_slug }}.cli.main:main"
+
+
+[tool.black]
+line-length = 80
+
+
+[tool.isort]
+line_length = 80
+multi_line_output = 3
+include_trailing_comma = true
+
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
