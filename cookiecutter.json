@@ -1,7 +1,7 @@
 {
-  "full_name": "Sandeep Aggarwal",
-  "email": "asandeep.me@gmail.com",
-  "github_username": "asandeep",
+  "full_name": "Sentieo Owner",
+  "email": "sentieo",
+  "github_username": "keshav-sentieo",
   "project_name": "PY3 GRPC Cookie",
   "project_short_description": "Cookiecutter template to run Python3 GRPC server.",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
