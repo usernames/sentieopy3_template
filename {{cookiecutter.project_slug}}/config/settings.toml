@@ -7,8 +7,8 @@ static_dir = "static"
 db_dialect = "postgresql"
 {% elif cookiecutter.database == 'MySQL' %}
 db_dialect = "mysql"
-{% elif cookiecutter.database == 'SQLite' %}
-db_dialect = "sqlite"
+{% elif cookiecutter.database == 'MongoDB' %}
+db_dialect = "MongoDB"
 {% else %}
 db_dialect = ""
 {% endif %}
@@ -21,8 +21,8 @@ db_name = ""
 db_host = ""
 {% if cookiecutter.database == 'PostgreSQL' %}
 db_port = "5432"
-{% elif cookiecutter.database == 'MySQL' %}
-db_port = "3306"
+{% elif cookiecutter.database == 'MongoDB' %}
+db_port = "27018"
 {% else %}
 db_port = ""
 {% endif %}

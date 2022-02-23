@@ -1,14 +1,18 @@
 .PHONY: clean virtualenv test docker
 
-POETRY_VERSION := "1.0.3"
-PROTO_FILES := $(shell find {{ cookiecutter.project_slug }}/ -name "*.proto")
+DOCKER_BUILD_STAGE := prod-build
+DOCKER_IMAGE_NAME := {{ cookiecutter.project_slug }}
+DOCKER_IMAGE_TAG := latest
+DOCKER_FILE_PATH := {{ cookiecutter.project_slug }}
+GRPC_SERVER_PORT := 50051
+ECR_PATH := 602037364990.dkr.ecr.us-east-1.amazonaws.com
 CURRENT_APP_VERSION := $(lastword $(shell poetry version))
+PACKAGR_URL_WITH_CREDS := $(lastword $(shell poetry export -f requirements.txt --with-credentials | head -n 1))
 
 clean:
 	-find . -name '*.py[ico]' -delete
 	-find {{ cookiecutter.project_slug }}/proto \( -name '*.py' ! -name '__init__.py' \) -delete
 	-rm -rf dist/*
-
 
 setup:
 	pip install poetry==$(POETRY_VERSION)
@@ -18,24 +22,39 @@ setup:
 	pre-commit install --install-hooks --hook-type pre-commit --hook-type pre-push
 	{% endif %}
 
+docker-builddep:
+	poetry export -f requirements.txt -o requirements.txt --without-hashes
 
-docker: clean protobuf
-	docker build -t {{ cookiecutter.project_slug }}:latest .
-	docker tag {{ cookiecutter.project_slug }}:latest {{ cookiecutter.project_slug }}:$(CURRENT_APP_VERSION)
+docker-ci-builddep:
+	poetry export -f requirements.txt -o requirements.txt --without-hashes --dev
 
+docker-build: clean
+	docker build \
+		--build-arg packagr_url=$(PACKAGR_URL_WITH_CREDS) \
+		-t $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) \
+		-t $(DOCKER_IMAGE_NAME):$(CURRENT_APP_VERSION) \
+		-t $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) \
+		-f Dockerfile .
 
-run-docker-server: docker
-	docker run -p 50051:50051 {{ cookiecutter.project_slug }}:latest
+	# Cleanup requirement file after image generation.
+	rm requirements.txt
 
+docker: docker-builddep docker-build
 
-run-server: protobuf
-	{{ cookiecutter.project_slug }} server
+docker-push:
+	docker push $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
+run-docker-server: docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT)  --name $(DOCKER_IMAGE_NAME) $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+
+run:
+	docker pull $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+	docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT) -d --name $(DOCKER_IMAGE_NAME) $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+
+run-server: python3 server.py
 
 run-client: protobuf
 	@echo ""
 	@{{ cookiecutter.project_slug }} client hello --from "$(FROM)"
-
 
 protobuf:
 	python -m grpc_tools.protoc -I . \
@@ -54,8 +73,6 @@ proto-docs:
 
 dist: protobuf clean
 	poetry build
-# dist-upload:
-# 	twine upload dist/*
 
 
 test: protobuf
@@ -76,13 +93,3 @@ update:
 	{% endif %}
 
 
-makemigrations:
-ifeq ($(MSG),)
-	@echo "Please provide revision message as MSG=<revision message>"
-else
-	alembic revision --autogenerate -m "$(MSG)"
-endif
-
-
-migrate:
-	alembic upgrade head

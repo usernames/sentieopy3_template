@@ -1,8 +1,8 @@
-FROM python:3.6-slim
+FROM python:3.8-slim
 
 LABEL maintainer="{{ cookiecutter.full_name }} <{{ cookiecutter.email }}>"
 
-ARG poetry_version=1.0.3
+ARG packagr_url
 
 # Environment varialbes to control python and pip behaviour.
 ENV PYTHONFAULTHANDLER=1 \
@@ -20,20 +20,15 @@ ENV GRPC_SERVICE_PORT="50051" \
     DEBUG_LEVEL_FOR_DYNACONF="DEBUG" \
     VAULT_ENABLED_FOR_DYNACONF=false
 
-RUN pip install poetry==${poetry_version}
-
 WORKDIR /{{ cookiecutter.project_slug }}
 
-COPY poetry.lock pyproject.toml /{{ cookiecutter.project_slug }}/
+COPY {{ cookiecutter.project_slug }}/requirements.txt /{{ cookiecutter.project_slug }}/
 
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-dev --no-root --no-interaction --no-ansi \
-    # TODO(asandeep): Fix logging config so that creting logs directory is not
-    # required.
-    && mkdir logs
+RUN PIP_EXTRA_INDEX_URL=${packagr_url} pip install \
+    -r /{{ cookiecutter.project_slug }}/requirements.txt
 
 COPY . /{{ cookiecutter.project_slug }}/
 
-CMD ["python", "-m", "{{ cookiecutter.project_slug }}.cli.main", "server"]
+ENTRYPOINT ["python3", "server.py"]
 
 EXPOSE ${GRPC_SERVICE_PORT}

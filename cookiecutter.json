@@ -1,7 +1,7 @@
 {
-  "full_name": "Sandeep Aggarwal",
-  "email": "asandeep.me@gmail.com",
-  "github_username": "asandeep",
+  "full_name": "Keshav Garg",
+  "email": "keshav.garg@sentieo.com",
+  "github_username": "keshav-sentieo",
   "project_name": "PY3 GRPC Cookie",
   "project_short_description": "Cookiecutter template to run Python3 GRPC server.",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
@@ -9,14 +9,6 @@
   "install_precommit_hooks": "y",
   "pypi_username": "{{ cookiecutter.github_username }}",
   "version": "0.1.0",
-  "open_source_license": [
-    "MIT license",
-    "BSD license",
-    "ISC license",
-    "Apache Software License 2.0",
-    "GNU General Public License v3",
-    "Not open source"
-  ],
   "database": [
     "PostgreSQL", "MySQL", "SQLite", "NA"
   ]
