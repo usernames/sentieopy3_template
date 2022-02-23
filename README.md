@@ -6,7 +6,7 @@ A [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/README.html) (pro
 
 
 
-## Usage
+### Usage
 
 Make sure you have [`cruft`](https://github.com/cruft/cruft) installed using [`Install Cruft`](https://github.com/cruft/cruft#installation)
 
