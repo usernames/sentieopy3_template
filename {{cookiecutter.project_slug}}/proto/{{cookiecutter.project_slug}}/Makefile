@@ -12,7 +12,7 @@ setup:
 
 python-protobuf:
 	python -m grpc_tools.protoc -I . \
-	--python_out=. --grpc_python_out=. --mypy_out=. $(SERVICE_PROTOS)
+	--python_out=. --grpc_python_out=. $(SERVICE_PROTOS)
 
 package: python-protobuf
 	# Proto compiler doesn't automatically generates the `__init__.py` file for
