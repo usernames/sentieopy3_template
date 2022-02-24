@@ -13,8 +13,8 @@ for path in paths:
     if path not in sys.path:
         sys.path.append(path)
 
-from sentieo.proto.{{cookiecutter.team}}.{cookiecutter.name}}.v1 import helloworld_pb2, helloworld_pb2_grpc
-from {{cookiecutter.project_slug}}.app.py.services.{{cookiecutter.name}}.service import NotesServicer
+from sentieo.proto.{{cookiecutter.project_team}}.{cookiecutter.project_name}}.v1 import helloworld_pb2, helloworld_pb2_grpc
+from {{cookiecutter.project_slug}}.app.py.services.{{cookiecutter.project_name}}.service import NotesServicer
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

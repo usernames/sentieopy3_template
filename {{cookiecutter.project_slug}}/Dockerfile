@@ -29,7 +29,7 @@ RUN PIP_EXTRA_INDEX_URL=${packagr_url} pip install \
 
 COPY . /{{ cookiecutter.project_slug }}/
 
-ENTRYPOINT ["python3", "-m", "{{cookiecutter.team}}.{{cookiecutter.name}}.app.py", "server"]
+ENTRYPOINT ["python3", "-m", "{{cookiecutter.project_team}}.{{cookiecutter.project_name}}.app.py", "server"]
 
 EXPOSE ${GRPC_SERVICE_PORT}
 

@@ -6,7 +6,7 @@
   "project_short_description": "Cookiecutter template to run Python3 GRPC server.",
   "project_team": "py3 eg: rms",
   "project_name": "grpc eg: comments",
-  "project_slug": "{{ (cookiecutter.team + cookiecutter.name).lower().replace(' ', '_').replace('-', '_') }}",
+  "project_slug": "{{ (cookiecutter.project_team + cookiecutter.project_name).lower().replace(' ', '_').replace('-', '_') }}",
   "cement_app_name": "{{ cookiecutter.project_slug.title().replace(' ', '') }}",
   "install_precommit_hooks": "y",
   "pypi_username": "{{ cookiecutter.github_username }}",
