@@ -1,7 +1,7 @@
 [tool.poetry]
 authors     = ["{{cookiecutter.full_name}} {{cookiecutter.email}}"]
 description = ""
-name        = "{{cookiecutter.project_slug}}-proto"
+name        = "{{cookiecutter.project_team}}-{{cookiecutter.project_name}}-proto"
 version = "0.0.1"
 
 packages = [{ include = "sentieo" }]

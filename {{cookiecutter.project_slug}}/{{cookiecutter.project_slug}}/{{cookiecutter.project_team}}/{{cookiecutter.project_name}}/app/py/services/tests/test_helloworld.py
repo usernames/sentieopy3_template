@@ -2,9 +2,8 @@ import grpc
 import grpc_testing
 import pytest
 
-from {{cookiecutter.project_slug}}.proto.v1 import helloworld_pb2
-from {{cookiecutter.project_slug}}.app.py.services import helloworld
-
+from sentieo.proto.{{cookiecutter.project_team}}.{{cookiecutter.project_name}}.v1 import helloworld_pb2
+import {{cookiecutter.project_slug}}.app.py.services.{{cookiecutter.project_name}}.service as helloworld
 
 class TestGreeterService(object):
     @pytest.fixture
