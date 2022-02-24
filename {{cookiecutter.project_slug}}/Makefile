@@ -46,37 +46,9 @@ docker-push:
 
 run-docker-server: docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT)  --name $(DOCKER_IMAGE_NAME) $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
-run:
-	docker pull $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
-	docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT) -d --name $(DOCKER_IMAGE_NAME) $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
-
 run-server: python3 server.py
 
-run-client: protobuf
-	@echo ""
-	@{{ cookiecutter.project_slug }} client hello --from "$(FROM)"
-
-protobuf:
-	python -m grpc_tools.protoc -I . \
-	--python_out=. --grpc_python_out=. --mypy_out=. $(PROTO_FILES)
-
-
-proto-docs:
-	docker run \
-	--rm -v $(CURDIR)/docs:/out \
-	-v $(CURDIR)/{{ cookiecutter.project_slug }}/proto:/{{ cookiecutter.project_slug }}/proto \
-	pseudomuto/protoc-gen-doc -I . $(PROTO_FILES)
-
-	# Open generated file with default application
-	xdg-open docs/index.html
-
-
-dist: protobuf clean
-	poetry build
-
-
-test: protobuf
-	-python -m pytest \
+test: -python -m pytest \
 		-v \
 		--cov={{ cookiecutter.project_slug }} \
 		--cov-report=term \

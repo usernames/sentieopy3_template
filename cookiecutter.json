@@ -2,14 +2,16 @@
   "full_name": "Keshav Garg",
   "email": "keshav.garg@sentieo.com",
   "github_username": "keshav-sentieo",
-  "project_name": "PY3 GRPC Cookie",
+  "project_title": "PY3 GRPC Cookie",
   "project_short_description": "Cookiecutter template to run Python3 GRPC server.",
-  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
-  "cement_app_name": "{{ cookiecutter.project_name.title().replace(' ', '') }}",
+  "project_team": "py3 eg: rms",
+  "project_name": "grpc eg: comments",
+  "project_slug": "{{ (cookiecutter.team + cookiecutter.name).lower().replace(' ', '_').replace('-', '_') }}",
+  "cement_app_name": "{{ cookiecutter.project_slug.title().replace(' ', '') }}",
   "install_precommit_hooks": "y",
   "pypi_username": "{{ cookiecutter.github_username }}",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "database": [
-    "PostgreSQL", "MySQL", "SQLite", "NA"
+    "PostgreSQL", "MySQL", "SQLite", "MongoDB", "NA"
   ]
 }

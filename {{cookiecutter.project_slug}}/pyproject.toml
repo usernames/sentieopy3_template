@@ -23,7 +23,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.6"
 cement = "^3.0.4"
-dynaconf = {version = "^2.2.3", extras = ["vault"]}
+dynaconf = {version = "^3.1.7", extras = ["vault"]}
 sqlalchemy = "^1.3"
 alembic = "^1.4.1"
 grpcio = "^1.27.2"
