@@ -1,6 +1,6 @@
 import logging
 
-from {{cookiecutter.project_slug}}.proto.v1 import helloworld_pb2, helloworld_pb2_grpc
+from sentieo.proto.{{cookiecutter.project_team}}.{{cookiecutter.project_name}}.proto.v1 import helloworld_pb2, helloworld_pb2_grpc
 
 LOGGER = logging.getLogger(__name__)
 

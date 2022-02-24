@@ -9,11 +9,6 @@ ECR_PATH := 602037364990.dkr.ecr.us-east-1.amazonaws.com
 CURRENT_APP_VERSION := $(lastword $(shell poetry version))
 PACKAGR_URL_WITH_CREDS := $(lastword $(shell poetry export -f requirements.txt --with-credentials | head -n 1))
 
-clean:
-	-find . -name '*.py[ico]' -delete
-	-find {{ cookiecutter.project_slug }}/proto \( -name '*.py' ! -name '__init__.py' \) -delete
-	-rm -rf dist/*
-
 setup:
 	pip install poetry==$(POETRY_VERSION)
 	poetry install
@@ -28,7 +23,7 @@ docker-builddep:
 docker-ci-builddep:
 	poetry export -f requirements.txt -o requirements.txt --without-hashes --dev
 
-docker-build: clean
+docker-build:
 	docker build \
 		--build-arg packagr_url=$(PACKAGR_URL_WITH_CREDS) \
 		-t $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) \
@@ -45,7 +40,7 @@ docker-push:
 	docker push $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
 run-docker-server: 
-	docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT)  --name $(DOCKER_IMAGE_NAME) $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+	docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT) --name $(DOCKER_IMAGE_NAME) $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
 run-server: 
 	python3 server.py

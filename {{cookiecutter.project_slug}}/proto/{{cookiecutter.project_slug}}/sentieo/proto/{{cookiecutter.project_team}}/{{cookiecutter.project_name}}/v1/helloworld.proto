@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package {{ cookiecutter.project_slug }}.v1.helloworld;
+package sentieo.{{ cookiecutter.project_team + '.' + cookiecutter.project_name}}.v1.helloworld;
 
 // The greeting service definition.
 service Greeter {

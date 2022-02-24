@@ -14,7 +14,7 @@ for path in paths:
         sys.path.append(path)
 
 from sentieo.proto.{{cookiecutter.project_team}}.{cookiecutter.project_name}}.v1 import helloworld_pb2, helloworld_pb2_grpc
-from {{cookiecutter.project_slug}}.app.py.services.{{cookiecutter.project_name}}.service import NotesServicer
+from {{cookiecutter.project_slug}}.app.py.services.{{cookiecutter.project_name}}.service import HelloworldServicer
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
