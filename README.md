@@ -1,4 +1,4 @@
-# Python 3 GRPC template
+## Python 3 GRPC template
 
 A [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/README.html) (project template) for creating gRPC services in Python 3
 
@@ -6,7 +6,7 @@ A [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/README.html) (pro
 
 
 
-## Usage
+### Usage
 
 Make sure you have [`cruft`](https://github.com/cruft/cruft) installed using [`Install Cruft`](https://github.com/cruft/cruft#installation)
 
@@ -18,7 +18,7 @@ cruft create https://github.com/usernames/sentieopy3_template
 
 The CLI interface will ask some basic questions, such the name of the project, and then generate the boilerplate code
 
-After that you can make it a proper git repo if you wish to:
+After that you can make it a proper git repo:
 
 ```sh
 cd <your-project-slug>
