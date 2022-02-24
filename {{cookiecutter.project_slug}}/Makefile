@@ -28,7 +28,8 @@ docker-builddep:
 docker-ci-builddep:
 	poetry export -f requirements.txt -o requirements.txt --without-hashes --dev
 
-docker-build: clean
+docker-build: 
+	clean
 	docker build \
 		--build-arg packagr_url=$(PACKAGR_URL_WITH_CREDS) \
 		-t $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) \
@@ -39,16 +40,24 @@ docker-build: clean
 	# Cleanup requirement file after image generation.
 	rm requirements.txt
 
-docker: docker-builddep docker-build
+docker: 
+	docker-builddep docker-build
 
 docker-push:
 	docker push $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
-run-docker-server: docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT)  --name $(DOCKER_IMAGE_NAME) $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+run-docker-server: 
+	docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT)  --name $(DOCKER_IMAGE_NAME) $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
-run-server: python3 server.py
+run-server: 
+	python3 server.py
 
-test: -python -m pytest \
+run-client:
+	@echo ""
+	@{{ cookiecutter.project_slug }} client hello --from "$(FROM)"
+
+test: 
+	-python -m pytest \
 		-v \
 		--cov={{ cookiecutter.project_slug }} \
 		--cov-report=term \

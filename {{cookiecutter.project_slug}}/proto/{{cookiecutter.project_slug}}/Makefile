@@ -10,22 +10,20 @@ clean:
 setup:
 	poetry install
 
-run-client: protobuf
-	@echo ""
-	@{{ cookiecutter.project_slug }} client hello --from "$(FROM)"
-
 python-protobuf:
 	python -m grpc_tools.protoc -I . \
 	--python_out=. --grpc_python_out=. --mypy_out=. $(SERVICE_PROTOS)
 
-package: python-protobuf
+package: 
+	python-protobuf
 	# Proto compiler doesn't automatically generates the `__init__.py` file for
 	# python packages. So, we explicitly generate the files just before package
 	# is built.
 	find sentieo -type d -exec touch {}/__init__.py \;
 	poetry build
 
-dist: protobuf clean
+dist: 
+	protobuf clean
 	poetry build
 
 update:

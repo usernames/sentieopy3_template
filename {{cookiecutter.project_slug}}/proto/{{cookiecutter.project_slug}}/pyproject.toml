@@ -4,8 +4,9 @@ description = ""
 name        = "{{cookiecutter.project_slug}}-proto"
 version = "0.0.1"
 
-packages = [{ include = "sentieo" }]
 # Explicitly include the generated python files to override Poetry's default
+packages = [{ include = "sentieo" }]
+
 # behavior of excluding .gitignore files.
 exclude = ["*/**/*.proto"]
 include = [
@@ -17,7 +18,7 @@ include = [
 
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^2.7"
 
 
 [tool.poetry.dev-dependencies]
