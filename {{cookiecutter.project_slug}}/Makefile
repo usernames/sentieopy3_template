@@ -31,9 +31,6 @@ docker-build:
 		-t $(ECR_PATH)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) \
 		-f Dockerfile .
 
-	# Cleanup requirement file after image generation.
-	rm requirements.txt
-
 docker: docker-builddep docker-build
 
 docker-push:

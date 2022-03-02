@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:3.8-slim as first-build
 
 LABEL maintainer="{{ cookiecutter.full_name }} <{{ cookiecutter.email }}>"
 
@@ -27,8 +27,10 @@ COPY {{ cookiecutter.project_slug }}/requirements.txt /{{ cookiecutter.project_s
 RUN PIP_EXTRA_INDEX_URL=${packagr_url} pip install \
     -r /{{ cookiecutter.project_slug }}/requirements.txt
 
+from first-build as second-build
 COPY . /{{ cookiecutter.project_slug }}/
 
+from second-build as third-build
 ENTRYPOINT ["python", "-m", "{{cookiecutter.project_team}}.{{cookiecutter.project_name}}.app.py.server"]
 
 EXPOSE ${GRPC_SERVICE_PORT}
