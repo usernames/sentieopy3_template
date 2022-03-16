@@ -40,7 +40,7 @@ run-docker-server:
 	docker run -p $(GRPC_SERVER_PORT):(GRPC_SERVER_PORT) --name $(DOCKER_IMAGE_NAME) $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
 
 run-server: 
-	python3 server.py
+	export ENV_FOR_DYNACONF="LOCAL" && python -m rms.settings.app.py.server
 
 test: 
 	-python -m pytest \
