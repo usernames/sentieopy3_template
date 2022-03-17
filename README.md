@@ -33,7 +33,7 @@ You can get the updates into your project with:
 cruft update
 ```
 
-###Setup Sentieo GRPC Application
+### Setup Sentieo GRPC Application
 
 https://sentieo.atlassian.net/l/c/x3tAPoSE
 
